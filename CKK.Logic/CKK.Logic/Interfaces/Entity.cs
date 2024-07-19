@@ -25,7 +25,7 @@ namespace CKK.Logic.Interfaces
                 {
                     Console.WriteLine(ex.Message);
                 }
-                
+                value = id;
             }
         }
         public string Name { get; set; }

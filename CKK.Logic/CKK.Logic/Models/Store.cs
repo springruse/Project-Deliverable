@@ -32,10 +32,19 @@ namespace CKK.Logic.Models
 
         public StoreItem AddStoreItem(Product product, int quantity)
         {
-            if (quantity <= 0)
+            try
             {
-                throw new InventoryItemStockTooLowException();
+                if (quantity <= 0)
+                {
+                    throw new InventoryItemStockTooLowException();
+                }
             }
+            catch (InventoryItemStockTooLowException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            
 
             var additem = FindStoreItemById(product.GetId());
 
@@ -53,13 +62,31 @@ namespace CKK.Logic.Models
 
         public StoreItem RemoveStoreItem(int id, int quantity)
         {
-
-            if (quantity < 0)
+            try
+            {
+                if (quantity < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+            catch (ArgumentOutOfRangeException)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             var additem = FindStoreItemById(id);
+
+            try
+            {
+                if (additem == null)
+                {
+                    throw new ProductDoesNotExistException();
+                }
+            }
+            catch (ProductDoesNotExistException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             if (additem != null)
             {
@@ -72,10 +99,7 @@ namespace CKK.Logic.Models
                 additem.SetQuantity(0);
                 return additem;
             }
-            else if (additem == null)
-            {
-                throw new ProductDoesNotExistException();
-            }
+            
 
             return null;
         }
@@ -87,9 +111,16 @@ namespace CKK.Logic.Models
 
         public StoreItem FindStoreItemById(int id)
         {
-            if (id < 0)
+            try
             {
-                throw new InvalidIdException();
+                if (id < 0)
+                {
+                    throw new InvalidIdException();
+                }
+            }
+            catch (InvalidIdException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return products.Find(x => x.GetProduct().GetId() == id);

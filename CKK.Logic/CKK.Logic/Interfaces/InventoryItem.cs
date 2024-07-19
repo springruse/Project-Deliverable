@@ -1,5 +1,6 @@
 ﻿using CKK.Logic.Exceptions;
 using CKK.Logic.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace CKK.Logic.Interfaces
 {
@@ -21,12 +22,13 @@ namespace CKK.Logic.Interfaces
                     {
                         throw new InventoryItemStockTooLowException();
                     }
-
                 }
                 catch (InventoryItemStockTooLowException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+
+                quantity = value;
             }
         }
     }
