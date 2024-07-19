@@ -28,8 +28,6 @@ namespace CKK.Logic.Interfaces
                     Console.WriteLine(ex.Message);
                 }
             }
-                
-            }
         }
     }
 }
