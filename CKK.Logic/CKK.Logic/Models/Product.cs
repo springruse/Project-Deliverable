@@ -15,7 +15,14 @@ namespace CKK.Logic.Models
             get { return price; }
             set
             {
-                if (value < 0)
+                try
+                {
+                    if (value < 0)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                }
+                catch
                 {
                     throw new ArgumentOutOfRangeException();
                 }

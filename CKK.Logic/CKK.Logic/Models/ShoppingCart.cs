@@ -44,6 +44,18 @@ namespace CKK.Logic.Models
 
         public ShoppingCartItem AddProduct(Product product, int quantity)
         {
+            try
+            {
+                if (quantity <= 0)
+                {
+                    throw new InventoryItemStockTooLowException();
+                }
+            }
+            catch (InventoryItemStockTooLowException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             if (quantity <= 0)
             {
                 throw new InventoryItemStockTooLowException();
@@ -70,6 +82,18 @@ namespace CKK.Logic.Models
 
         public ShoppingCartItem GetProductById(int id)
         {
+            try
+            {
+                if (id < 0)
+                {
+                    throw new InvalidIdException();
+                }
+            }
+            catch(InvalidIdException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             if (id < 0)
             {
                 throw new InvalidIdException();
@@ -81,12 +105,38 @@ namespace CKK.Logic.Models
 
         public ShoppingCartItem RemoveProduct(int id, int quantity)
         {
+
+            try
+            {
+                if(quantity < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
             if (quantity < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             var additem = GetProductById(id);
+
+            try
+            {
+                if (additem == null)
+                {
+                    throw new ProductDoesNotExistException();
+                }
+            }
+            catch(ProductDoesNotExistException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             if (additem != null)
             {
@@ -100,11 +150,6 @@ namespace CKK.Logic.Models
                 additem.SetQuantity(additem.GetQuantity() - quantity);
                 return additem;
             }
-            else if (additem == null)
-            {
-                throw new ProductDoesNotExistException();
-            }
-
             return null;
         }
 
