@@ -14,10 +14,21 @@ namespace CKK.Logic.Interfaces
 
             set
             {
-                if (value < 0)
+                try
                 {
-                    throw new InventoryItemStockTooLowException();
+
+                    if (value < 0)
+                    {
+                        throw new InventoryItemStockTooLowException();
+                    }
+
                 }
+                catch (InventoryItemStockTooLowException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+                
             }
         }
     }

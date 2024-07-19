@@ -13,10 +13,19 @@ namespace CKK.Logic.Interfaces
             }
             set
             {
-                if (value < 0)
+                try
                 {
-                    throw new InvalidIdException();
+                    if (value < 0)
+                    {
+                         throw new InvalidIdException();
+                    }
+
                 }
+                catch (InvalidIdException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
             }
         }
         public string Name { get; set; }
